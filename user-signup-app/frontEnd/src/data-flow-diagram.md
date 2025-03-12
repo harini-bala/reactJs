@@ -1,72 +1,95 @@
-User Authentication System (Retail App):
+**User Authentication System (Retail App) - Data Flow Diagram (DFD)**
 
+### **DFD Level 0 (Context Diagram)**
+- Shows high-level interaction between user, system, and database.
 
+#### **Entities:**
+1. **User**: Registers, logs in, accesses retail page, logs out.
+2. **System (React + Node.js)**: Handles authentication processes.
+3. **MySQL Database**: Stores user credentials and session data.
 
-This React and Node.js application provides a secure authentication system for a retail website, handling user registration, login, and access control to protected resources. It utilizes a MySQL database to store user credentials and manage session data.
-Level 0 DFD (Context Diagram):
-+-----------------------+
-|  External Entities    |
-|                                |
-|   - User                   |
-+-----------------------+
+```
++-------------------+
+|      User        |
+|-------------------|
+|  - Sign Up       |
+|  - Log In        |
+|  - View Page     |
+|  - Log Out       |
++-------------------+
           |
+          | (User Request)
           v
-+------------------------+
-| Authentication System |
-| (React + Node.js)     |
-+------------------------+
++---------------------+
+|  Authentication    |
+|      System        |
++---------------------+
           |
+          | (Data Request)
           v
-+------------------------+
-|  Data Store:          |
-|  - MySQL Database    | 
-|  (User Credentials)  |
-+------------------------+
++---------------------+
+|   MySQL Database   |
+| (User Credentials) |
++---------------------+
+```
 
-Explanation:
-External Entity (User): The user interacts with the system to sign up, log in, access the retail page, and log out.
-Process (Authentication System): The React and Node.js application handles user authentication and authorization.
-Data Store (MySQL Database): Stores user credentials and session data.
-Level 1 DFD (Decomposed Processes):
-+-----------------------+
-|    External Entity    |
-|        (User)        |
-+-----------------------+
-          |
-          v
-+--------------------------+
-|   Process: 1.1          |
-|   User Registration    |
-+--------------------------+
-          |
-          v
-+--------------------------+
-|   Process: 1.2          |
-|   User Login           |
-+--------------------------+
-          |
-          v
-+--------------------------+
-|   Process: 1.3          |
-|   Access Retail Page   |
-+--------------------------+
-          |
-          v
-+--------------------------+
-|   Process: 1.4          |
-|   User Logout          |
-+--------------------------+
-          |
-          v
-+--------------------------+
-|   Data Store:           |
-|   MySQL Database        |
-|   (User Credentials)    |
-+--------------------------+
+---
 
-Explanation:
-Process 1.1 (User Registration): The user submits registration details, which are validated and stored in the database.
-Process 1.2 (User Login): The user provides login credentials, which are verified against the database. If successful, a session is created.
-Process 1.3 (Access Retail Page): The user, after logging in, can access the retail page. The system verifies the session before granting access.
-Process 1.4 (User Logout): The user logs out, and the system terminates the session.
+### **DFD Level 1 (Detailed Process Flow)**
+- Shows how signup, login, and page access are handled.
 
+```
++------------+       +----------------+       +----------------------+
+|   User     | ----> | React Frontend | ----> |  Node.js Backend     |
+|            |       | (Form Handling)|       |  (Express API)       |
++------------+       +----------------+       +----------------------+
+      |                    |                           |
+      | (SignUp/Login)      | (POST request)           | (Validate Input)
+      |-------------------> |----------------------->  |-------------------+
+      |                    |                           v                   |
+      |                    |                    +----------------+         |
+      |                    |                    |  MySQL Database|         |
+      |                    |                    |  (User Table)  |         |
+      |                    |                    +----------------+         |
+      |                    |                           |                   |
+      |                    |     (User Exists?)       |                   |
+      |                    |<------------------------ |                   |
+      |                    |                           v                   |
+      |                    |     (JWT Token)          |                   |
+      |                    |<----------------------  |                   |
+      |                    |                                                   |
+      | (Access Retail Page)|--------------------------------->(Check Token)   |
+      |                    |<---------------------------------(Grant Access)   |
+```
+
+---
+
+### **Process Breakdown**
+
+#### **1. User Registration**
+- User submits signup form.
+- React frontend sends data to backend.
+- Node.js backend validates data and stores it in MySQL.
+- Success response is sent back.
+
+#### **2. User Login**
+- User enters credentials.
+- React frontend sends login details to backend.
+- Backend verifies credentials, generates JWT token, and responds with success.
+
+#### **3. Secure Page Access**
+- React frontend checks if the JWT token is valid before showing retail page.
+- If valid, access is granted.
+
+#### **4. Logout Process**
+- JWT token is cleared from local storage or HTTP-only cookie.
+- User session is ended.
+
+## **Additional Considerations**
+
+- **Security**: Use HTTPS for secure communication.
+- **Error Handling**: Handle errors gracefully and provide user-friendly messages.
+- **Performance**: Optimize database queries and minimize API calls.
+- **Testing**: Write unit and integration tests for critical components.
+
+---
