@@ -1,21 +1,32 @@
-Simple-form-handelling app
-This React application demonstrates basic form handling by capturing user input for "Name" and "Email" fields. It showcases the use of React's useState hook for managing form data and handling form submission events.
-Level 0 DFD (Context Diagram)
+# **Data Flow Diagram (DFD) for Simple Form Handling App**
+
+## **Level 0 DFD (Context Diagram)**
+### **Entities & Flow:**
+- **User** → Enters Data → **Form Handling App** → Processes & Displays Data
+
+```
 +-----------------------+
 |  External Entities    |
-|                                |
-|   - User                   | 
+|                       |
+|   - User             |
 +-----------------------+
           |
           v
 +------------------------+
 |   Form Handling App    |
-|  (React Frontend)     |
+|   (React Frontend)     |
 +------------------------+
+```
 
-External Entity (User): This represents the person interacting with your form. They provide the input data.
-Process (Form Handling App): This is your React application itself. It's responsible for managing the form, capturing the user's input, and potentially processing or displaying it.
-Level 1 DFD (Decomposed Processes)
+### **Explanation:**
+- **External Entity (User):** Represents the person interacting with the form by entering input.
+- **Process (Form Handling App):** Manages form interactions, captures user input, and processes it accordingly.
+
+---
+
+## **Level 1 DFD (Decomposed Processes)**
+
+```
 +-----------------------+
 |    External Entity    |
 |        (User)        |
@@ -38,8 +49,14 @@ Level 1 DFD (Decomposed Processes)
 |   Process: 1.3          |
 |   Display Data          |
 +--------------------------+
+```
 
-Process 1.1 (User Enters Data): The user types their name and email into the respective fields of the form.
-Process 1.2 (Handle Form Submit): When the user clicks "Submit," the application takes over. This might involve validating the data, storing it in the component's state, or sending it to a server.
-Process 1.3 (Display Data): The application might then display the submitted data on the screen, show a confirmation message, or perform some other action based on the input.
+### **Explanation:**
+- **Process 1.1 (User Enters Data):** The user types their name and email into the form fields.
+- **Process 1.2 (Handle Form Submit):** On clicking "Submit," the app validates, stores data in state, or sends it to a server.
+- **Process 1.3 (Display Data):** The app displays the submitted data, shows a confirmation message, or takes further actions.
 
+### **Key Features:**
+- Uses React's **useState hook** to manage form data.
+- Captures and processes user input.
+- Handles form submission with validation and UI updates.
